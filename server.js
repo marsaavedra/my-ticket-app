@@ -4,11 +4,14 @@ var bodyParser 	= require('body-parser');
 var path 		= require("path");
 const nodemailer = require('nodemailer');
 const formidable = require('formidable');
+const upload = require('express-fileupload');
 const fs = require('fs');
+
 
 
 var port = process.env.PORT || 8080;
 
+app.use(upload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -19,7 +22,23 @@ app.use('/assets', express.static(path.join(__dirname, '/public/assets')));
 app.get("/",function(req,res){
 	res.sendFile((path.join(__dirname,"./public/index.html")));
 });
-
+//post express-fileuploader
+app.post("/", function(req,res){
+	if (req.files){
+		var file = req.files.filename,
+		var filename = file.name;
+		console.log(filename);
+		file.mv("./upload/"+ filename, function(err){
+			if (err) {
+				console.log(err);
+				res.send("error occurred");
+			}
+			else{
+				res.send("Done!");
+			}
+		}) 
+	}
+});
 //post for file uploader
 app.post('/upload', function(req, res){
 

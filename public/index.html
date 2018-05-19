@@ -25,6 +25,11 @@
 </button>
 <input id="upload-input" type="file" name="uploads[]" multiple="multiple">
 
+<form method="post" enctype="multipart/form-data" action="/">
+	<input type="file" name="filename">
+	<input type="submit" value="upload">
+</form>
+
 <!-- Modal -->
 <div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" 
      aria-labelledby="myModalLabel" aria-hidden="true">
